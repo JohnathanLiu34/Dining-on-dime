@@ -92,11 +92,14 @@ def parse_price_level(desired_level,restaurants):
     for restaurant in restaurants['results']:
         if "price_level" in restaurant:
             if restaurant["price_level"] <= desired_level:
-                data = {'name': restaurant['name'],
-                        'address':restaurant['vicinity'],
-                        'rating':restaurant['rating'],
-                        }
-                results.append(data)
+                try:
+                    data = {'name': restaurant['name'],
+                            'address':restaurant['vicinity'],
+                            'rating':restaurant['rating'],
+                            }
+                    results.append(data)
+                except KeyError:
+                    print('exception')
                 
     return results
 
@@ -112,8 +115,7 @@ def main():
     #print(get_user_location("Elmhurst NY"))
     #print(complete_restaurant_finder("Back Bay, Boston, MA",1000,1600))
     #print(complete_restaurant_finder("Montrose, Houston, TX",2000,1600))
-    print(complete_restaurant_finder("Oro Valley, AZ",3000,1600))
-
+    #print(complete_restaurant_finder("Oro Valley, AZ",3000,1600))
 
 if __name__ == "__main__":
     main()

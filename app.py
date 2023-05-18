@@ -10,3 +10,8 @@ def home():
 @app.route('/about')
 def about():
     return 'Love and joy'
+
+if __name__ == "__main__":
+    app.run(debug=False)
+    
+   
