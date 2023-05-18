@@ -113,7 +113,7 @@ def complete_restaurant_finder(location,cash,distance):
 def main():
     print("Hello World")
     #print(get_user_location("Elmhurst NY"))
-    #print(complete_restaurant_finder("Back Bay, Boston, MA",1000,1600))
+    print(complete_restaurant_finder("Back Bay, Boston, MA",1000,1600))
     #print(complete_restaurant_finder("Montrose, Houston, TX",2000,1600))
     #print(complete_restaurant_finder("Oro Valley, AZ",3000,1600))
 

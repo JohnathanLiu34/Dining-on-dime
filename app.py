@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request,jsonify
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -10,4 +11,9 @@ def howtouse():
 @app.route('/moreaboutyou')
 def moreaboutyou():
     return render_template('moreaboutyou.html')  
-
+@app.route('/submit',methods = ['POST'])
+def processing():
+  if request.method == 'POST':
+    data = request.form
+    print(data)
+    return 'good'
