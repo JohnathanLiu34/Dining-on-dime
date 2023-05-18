@@ -6,6 +6,7 @@ import json
 import requests
 from flask import Flask, render_template
 import time
+import sys
 
 #Please do not share this, I am broke
 API_Key = "AIzaSyAAsPXGsYgX8aF5O4HdP21AY-kbjMTJYsw"
@@ -57,7 +58,9 @@ def parse_price_level(desired_level):
     list = []
     restaurants = find_restaurants(API_Key,"40.74291,-73.87998")
     for restaurant in restaurants:
-        place_id = restaurants["place_id"]
+        print(type(restaurant))
+        print(restaurant[2])
+        place_id = restaurant["place_id"]
         details = get_place_details(API_Key, place_id)
         if "price_level" in details["result"]:
             if details["result"]["price_level"] == desired_level:
@@ -67,10 +70,10 @@ def parse_price_level(desired_level):
 def main():
     print("Hello World")
     #print(get_user_location("Elmhurst NY"))
-    print(find_restaurants(API_Key,"40.74291,-73.87998"))
-    
-
-
+    #print(find_restaurants(API_Key,"40.74291,-73.87998"))
+    r = find_restaurants(API_Key,"40.74291,-73.87998")
+    print(r["place_id"])
+    #print(parse_price_level(1))
 
 
 if __name__ == "__main__":
