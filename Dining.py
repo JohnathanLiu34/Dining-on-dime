@@ -87,12 +87,11 @@ def budgeting_formula(cash):
     else:
         return 1
     
-def parse_price_level(desired_level,location):
+def parse_price_level(desired_level,restaurants):
     results = []
-    restaurants = find_restaurants(API_Key,location)
     for restaurant in restaurants['results']:
         if "price_level" in restaurant:
-            if restaurant["price_level"] == desired_level:
+            if restaurant["price_level"] <= desired_level:
                 data = {'name': restaurant['name'],
                         'address':restaurant['vicinity'],
                         'rating':restaurant['rating'],
@@ -105,17 +104,16 @@ def complete_restaurant_finder(location,cash,distance):
     loc = location_to_coordinates(location)
     budget = budgeting_formula(cash)
     restaurants = find_restaurants(API_Key,loc, radius=distance)
-    # unfinished function
-    pass
-    
-    
-    pass
+    finished_restaurants = parse_price_level(budget,restaurants)
+    return finished_restaurants
+
 def main():
     print("Hello World")
-    print(get_user_location("Elmhurst NY"))
-    #print(find_restaurants(API_Key, 'Vancouver, Canada', radius = 3600))
-    #print(parse_price_level(2,location_to_coordinates('Tucson,AZ')))
-    #print(location_to_coordinates('Elmhurst,NY'))
+    #print(get_user_location("Elmhurst NY"))
+    #print(complete_restaurant_finder("Back Bay, Boston, MA",1000,1600))
+    #print(complete_restaurant_finder("Montrose, Houston, TX",2000,1600))
+    print(complete_restaurant_finder("Oro Valley, AZ",3000,1600))
+
 
 if __name__ == "__main__":
     main()
