@@ -1,17 +1,10 @@
 from flask import Flask, render_template
-
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template('home.html')
+@app.route('/moreaboutyou')
+def moreaboutyou():
+    return render_template('moreaboutyou.html')  
 
-
-@app.route('/about')
-def about():
-    return 'Love and joy'
-
-if __name__ == "__main__":
-    app.run(debug=False)
-    
-   
