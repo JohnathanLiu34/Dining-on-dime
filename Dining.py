@@ -38,8 +38,11 @@ def find_restaurants(api_key, location, radius = 1600):
 def main():
     print("Hello World")
     print(get_user_location("Elmhurst NY"))
-
+    time.sleep(2)
+    print('\n')
+    print(find_restaurants(API_Key,'40.74291,-73.87998'))
 
 
 if __name__ == "__main__":
+    
     main()
