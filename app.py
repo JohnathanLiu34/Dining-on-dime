@@ -20,6 +20,7 @@ def processing():
     data = request.form
     for x in data:
       args.update({x:data[x]})
-    print(args)
-    print(complete_restaurant_finder(data['Location'],int(data['Balance']),int(data['Distance'])))
-    return 'good'
+    #print(args)
+    restaurants = complete_restaurant_finder(data['Location'],int(data['Balance']),int(data['Distance']))
+    
+    return render_template('/results.html',context = restaurants)
