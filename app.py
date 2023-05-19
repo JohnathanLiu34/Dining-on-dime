@@ -23,4 +23,4 @@ def processing():
     #print(args)
     restaurants = complete_restaurant_finder(data['Location'],int(data['Balance']),int(data['Distance']))
     
-    return render_template('/results.html',context = restaurants)
+    return render_template('/results.html',context = restaurants[:5])
