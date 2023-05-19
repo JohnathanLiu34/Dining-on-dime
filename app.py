@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 app = Flask(__name__)
-
+from Dining import complete_restaurant_finder
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -21,4 +21,5 @@ def processing():
     for x in data:
       args.update({x:data[x]})
     print(args)
+    print(complete_restaurant_finder(data['Location'],int(data['Balance']),int(data['Distance'])))
     return 'good'

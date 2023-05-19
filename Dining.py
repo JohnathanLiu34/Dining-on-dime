@@ -112,7 +112,7 @@ def main():
     #print(get_user_location("Elmhurst NY"))
     #print(complete_restaurant_finder("Back Bay, Boston, MA",1000,1600))
     #print(complete_restaurant_finder("Montrose, Houston, TX",2000,1600))
-    #print(complete_restaurant_finder("Oro Valley, AZ",3000,1600))
+    print(complete_restaurant_finder("Oro Valley, AZ",3000,1600))
 
 if __name__ == "__main__":
     main()
