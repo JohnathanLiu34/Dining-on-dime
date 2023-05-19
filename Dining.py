@@ -1,11 +1,8 @@
 #pip install googlemaps
 import googlemaps
 #pip install prettyprint
-import prettyprint
 import json
 import requests
-import time
-import sys
 
 #Please do not share this, I am broke
 API_Key = "AIzaSyAAsPXGsYgX8aF5O4HdP21AY-kbjMTJYsw"
