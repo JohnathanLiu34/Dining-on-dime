@@ -21,6 +21,6 @@ def processing():
     for x in data:
       args.update({x:data[x]})
     #print(args)
-    restaurants = complete_restaurant_finder(data['Location'],int(data['Balance']),int(data['Distance']))
-    
+    restaurants = complete_restaurant_finder(data['Location'],int(data['Balance']),int(data['Distance'])*1600)
+    print(restaurants)
     return render_template('/results.html',context = restaurants[:5])
