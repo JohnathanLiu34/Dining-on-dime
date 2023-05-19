@@ -1,24 +1,71 @@
 #pip install googlemaps
 import googlemaps
+#pip install prettyprint
+import prettyprint
 import json
 import requests
 import time
+import sys
 
 #Please do not share this, I am broke
 API_Key = "AIzaSyAAsPXGsYgX8aF5O4HdP21AY-kbjMTJYsw"
 google_client  = googlemaps.Client(API_Key)
 
 def get_user_location(name):
-    print("working")
     try:
         response = google_client.places(query = name)
-        print("working2")
+        print("getting user location")
         results = response.get('results')
         return results
     except Exception as e:
         print("failed")
         print(e)
         return
+
+
+def find_restaurants(api_key, location, radius = 1600):
+    try:
+        endpoint_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+        param = {
+            "location" : location,
+            "radius" : radius,
+            "type" : "restaurant",
+            "key" : api_key,
+        }
+        request_status = requests.get(endpoint_url, params = param)
+        result = json.loads(request_status.content)
+        print("finding nearby restaurants")
+        return result
+    except Exception as e:
+        print(e)
+        return
+
+
+def get_place_details(api_key, place_id):
+    endpoint_url = "https://maps.googleapis.com/maps/api/place/details/json"
+    param = {
+        "place_id" : place_id,
+        "fields" : "name,price_leve",
+        "key" : api_key
+    }
+    request_status = requests.get(endpoint_url,params = param)
+    result = json.loads(request_status.content)
+    return result
+
+
+def parse_price_level(desired_level,restaurants):
+    results = []
+    print("parsing based on price")
+    for restaurant in restaurants['results']:
+        if "price_level" in restaurant:
+            if restaurant["price_level"] <= desired_level:
+                data = {'name': restaurant['name'],
+                        'address':restaurant['vicinity'],
+                        'rating':restaurant['rating'],
+                        }
+                results.append(data)
+                
+    return results
 
 def location_to_coordinates(location):
     try:
@@ -31,39 +78,11 @@ def location_to_coordinates(location):
         result = json.loads(request_status.content)['results'][0]['geometry']['location']
         coords = str(result['lat'])+', '+str(result['lng'])
         return coords
-
     except Exception as e:
         print(e)
-        return
-    
-def find_restaurants(api_key, location, radius = 1600):
-    try:
-        endpoint_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-        param = {
-            "location" : location_to_coordinates(location),
-            "radius" : radius,
-            "type" : "restaurant",
-            "key" : api_key,
-        }
-        print('\n')
-        request_status = requests.get(endpoint_url, params = param)
-        result = json.loads(request_status.content)
-        print("working3")
-        return result
-    except Exception as e:
-        print(e)
+        print("error caught")
         return
 
-
-def get_place_details(api_key, place_id):
-    endpoint_url = "https://maps.googleapis.com/maps/api/place/details/json"
-    param = {
-        "place_id" : place_id,
-        "fields" : "name,price_level",
-        "key" : api_key
-    }
-    request_status = requests.get(endpoint_url,params=param)
-    result = json.loads(request_status.content)
 
 def budgeting_formula(cash):
     """
@@ -83,22 +102,7 @@ def budgeting_formula(cash):
         return 2
     else:
         return 1
-    
-def parse_price_level(desired_level,restaurants):
-    results = []
-    for restaurant in restaurants['results']:
-        if "price_level" in restaurant:
-            if restaurant["price_level"] <= desired_level:
-                try:
-                    data = {'name': restaurant['name'],
-                            'address':restaurant['vicinity'],
-                            'rating':restaurant['rating'],
-                            }
-                    results.append(data)
-                except KeyError:
-                    print('exception')
-                
-    return results
+
 
 def complete_restaurant_finder(location,cash,distance):
     loc = location_to_coordinates(location)
@@ -113,6 +117,7 @@ def main():
     #print(complete_restaurant_finder("Back Bay, Boston, MA",1000,1600))
     #print(complete_restaurant_finder("Montrose, Houston, TX",2000,1600))
     #print(complete_restaurant_finder("Oro Valley, AZ",3000,1600))
-
+    
 if __name__ == "__main__":
     main()
+  
