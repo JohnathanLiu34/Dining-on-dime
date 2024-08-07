@@ -5,7 +5,7 @@ import json
 import requests
 
 #Please do not share this, I am broke
-API_Key = "AIzaSyAAsPXGsYgX8aF5O4HdP21AY-kbjMTJYsw"
+API_Key = "Insert_API_Key_Here"
 google_client  = googlemaps.Client(API_Key)
 
 def get_user_location(name):
